@@ -24,6 +24,7 @@
     "noFallthroughCasesInSwitch": true,
     "types": [
       "node",
+      "webpack-env"
     ]
   },
   "include": ["src", "src/feature/auth/services/.ts"],

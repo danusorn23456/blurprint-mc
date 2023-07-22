@@ -1,6 +1,6 @@
 import axios from "axios";
-import { NBT } from "prismarine-nbt";
 import { ChangeEvent } from "react";
+import { NBT } from ".";
 
 export interface NbtFormProps {
   onChange: (e: ChangeEvent<HTMLInputElement>, nbt: NBT) => void;

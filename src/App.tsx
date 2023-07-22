@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-import { NBT } from "prismarine-nbt";
-import { NbtForm, NbtRenderer } from "./sections";
+import { NBT, NbtForm, NbtRenderer } from "./sections";
 
 function App() {
   const [nbt, setNbt] = useState<NBT | null>(null);
