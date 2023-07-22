@@ -18,8 +18,12 @@ export type PaletteInfo = {
 
 export type NBT = {
   value: {
-    blocks: BlockInfo[];
-    palette: PaletteInfo[];
+    blocks: {
+      value: BlockInfo[];
+    };
+    palette: {
+      value: PaletteInfo[];
+    };
   };
 };
 
@@ -46,20 +50,20 @@ const NbtRenderer = ({ nbt }: NbtRendererProps) =>
 
     const { blocks, palette } = nbt.value;
 
-    const maxWidth = Math.max(...blocks.map((b) => b.value.pos[0])) || 0;
-    const maxHeight = Math.max(...blocks.map((b) => b.value.pos[1])) || 0;
+    const maxWidth = Math.max(...blocks.value.map((b) => b.value.pos[0])) || 0;
+    const maxHeight = Math.max(...blocks.value.map((b) => b.value.pos[1])) || 0;
 
     useLayoutEffect(() => {
       camera.position.set(maxWidth / 2, maxHeight / 2, maxWidth);
     }, []);
 
     return (
-      <BlockTextureLoader names={palette.map((p) => p.value.Name)}>
+      <BlockTextureLoader names={palette.value.map((p) => p.value.Name)}>
         {blocks &&
-          blocks.map((block, index) => (
+          blocks.value.map((block, index) => (
             <Block
               key={index}
-              name={palette[block.value.state].value.Name}
+              name={palette.value[block.value.state].value.Name}
               position={block.value.pos}
             />
           ))}
