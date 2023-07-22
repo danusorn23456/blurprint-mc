@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
-import { NBT } from ".";
+import { NBT } from "~/types";
 
 export interface NbtFormProps {
   onChange: (e: ChangeEvent<HTMLInputElement>, nbt: NBT) => void;
