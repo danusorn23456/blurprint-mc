@@ -57,7 +57,7 @@ const BlockTextureLoader = ({ names, children }: BlockTextureLoaderProps) => {
         await new Promise((res) => {
           loader.load(
             path,
-            (texture) => {
+            (texture: Texture) => {
               textures[index].texture = texture;
               res("successfuly");
             },

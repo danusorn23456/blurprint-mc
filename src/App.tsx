@@ -6,7 +6,7 @@ import { NbtForm, NbtRenderer } from "./sections";
 function App() {
   const [nbt, setNbt] = useState<NBT | null>(null);
 
-  function handleNbtChange(e: ChangeEvent, nbt: NBT) {
+  function handleNbtChange(_e: ChangeEvent, nbt: NBT) {
     setNbt(nbt);
   }
 
