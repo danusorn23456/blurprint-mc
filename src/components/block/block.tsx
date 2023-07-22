@@ -1,5 +1,11 @@
 import { useLayoutEffect, useRef } from "react";
-import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from "three";
+import {
+  BoxGeometry,
+  DoubleSide,
+  Mesh,
+  MeshBasicMaterial,
+  Vector3,
+} from "three";
 import { useBlockTexture } from ".";
 
 export interface BlockProps {
@@ -26,10 +32,14 @@ const Block = ({ name, position = [0, 0, 0] }: BlockProps) => {
     }
   });
 
+  if (name.includes("minecraft:air")) {
+    return <></>;
+  }
+
   return (
     <mesh ref={meshRef} position={pos}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial wireframe={name.includes("minecraft:air")} />
+      <meshStandardMaterial side={DoubleSide} />
     </mesh>
   );
 };

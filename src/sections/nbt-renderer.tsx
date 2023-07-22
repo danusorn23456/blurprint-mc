@@ -1,5 +1,5 @@
+import { CameraControls } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
-
 import { ComponentType, useLayoutEffect } from "react";
 import { Block, BlockTextureLoader } from "~/components";
 import { NBT, TagType } from "~/types";
@@ -30,6 +30,7 @@ const NbtCanvas = (Component: ComponentType) => {
           <ambientLight intensity={0.4} />
           <Component />
         </camera>
+        <CameraControls makeDefault />
       </scene>
     </Canvas>
   );
@@ -60,26 +61,24 @@ function simplify(data: NBT): simplifyNBT {
 const NbtRenderer = ({ nbt }: NbtRendererProps) =>
   NbtCanvas(() => {
     const { camera } = useThree();
-
     const { blocks, palette } = simplify(nbt);
 
     const maxWidth = Math.max(...blocks.map((b) => b.pos[0])) || 0;
     const maxHeight = Math.max(...blocks.map((b) => b.pos[1])) || 0;
 
-    useLayoutEffect(() => {
-      camera.position.set(maxWidth / 2, maxHeight / 2, maxWidth);
-    }, []);
-
     return (
       <BlockTextureLoader names={palette.map((p) => p.Name)}>
-        {blocks &&
-          blocks.map((block, index) => (
-            <Block
-              key={index}
-              name={palette[block.state].Name}
-              position={block.pos}
-            />
-          ))}
+        {blocks && (
+          <group position={[-maxWidth / 2, 0, 0]} rotation={[0, 0, 0]}>
+            {blocks.map((block, index) => (
+              <Block
+                key={index}
+                name={palette[block.state].Name}
+                position={block.pos}
+              />
+            ))}
+          </group>
+        )}
       </BlockTextureLoader>
     );
   });
