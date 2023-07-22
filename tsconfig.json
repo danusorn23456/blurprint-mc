@@ -22,6 +22,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "types": [
+      "node",
+      "webpack-env"
+    ]
   },
   "include": ["src", "src/feature/auth/services/.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
