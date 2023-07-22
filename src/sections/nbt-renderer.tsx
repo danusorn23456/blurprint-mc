@@ -69,7 +69,7 @@ const NbtRenderer = ({ nbt }: NbtRendererProps) =>
       <BlockTextureLoader names={palette.map((p) => p.Name)}>
         {blocks && (
           <group
-            position={[-maxWidth / 2, -maxHeight / 2, 0]}
+            position={[-maxWidth / 2, -maxHeight / 2, -maxWidth]}
             rotation={[0, 0, 0]}
           >
             {blocks.map((block, index) => (
