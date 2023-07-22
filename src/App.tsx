@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
-import { NBT, NbtForm, NbtRenderer } from "./sections";
+import { NbtForm, NbtRenderer } from "./sections";
+import { NBT } from "./types";
 
 function App() {
   const [nbt, setNbt] = useState<NBT | null>(null);
