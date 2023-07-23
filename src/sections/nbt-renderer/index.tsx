@@ -1,8 +1,10 @@
-import { CameraControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { ComponentType, useLayoutEffect, useRef } from "react";
+import { ComponentType } from "react";
 import { Block, BlockTextureLoader } from "~/components";
 import { NBT, TagType } from "~/types";
+import { Cursor } from "./cursor";
+import { Ground } from "./ground";
+import { Control } from "./control";
 
 export type BlockInfo = {
   pos: number[];
@@ -54,22 +56,17 @@ function simplify(data: NBT): simplifyNBT {
 
 const NbtRenderer = ({ nbt }: NbtRendererProps) =>
   NbtCanvas(() => {
-    const cameraControlRef = useRef<CameraControls | null>(null);
     const { blocks, palette } = simplify(nbt);
 
     const maxWidth = Math.max(...blocks.map((b) => b.pos[0])) || 0;
-    const maxHeight = Math.max(...blocks.map((b) => b.pos[1])) || 0;
-
-    useLayoutEffect(() => {
-      cameraControlRef.current?.setPosition(0, 0, -maxWidth);
-    });
+    // const maxHeight = Math.max(...blocks.map((b) => b.pos[1])) || 0;
 
     return (
       <>
-        <CameraControls ref={cameraControlRef} />
-        <scene position={[0, 0, 0]}>
+        <Control position={[0, 0, -maxWidth]} />
+        <scene>
           <ambientLight intensity={0.4} />
-          <camera position={[-maxWidth / 2, -maxHeight / 2, 0]}>
+          <camera>
             <BlockTextureLoader names={palette.map((p) => p.Name)}>
               {blocks &&
                 blocks.map((block, index) => (
@@ -80,6 +77,8 @@ const NbtRenderer = ({ nbt }: NbtRendererProps) =>
                   />
                 ))}
             </BlockTextureLoader>
+            <Ground />
+            <Cursor />
           </camera>
         </scene>
       </>
