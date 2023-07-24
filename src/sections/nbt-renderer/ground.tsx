@@ -9,7 +9,7 @@ const Ground = () => {
       position={[0, -0.5, 0]}
     >
       <planeGeometry args={[201, 201, 201, 201]} />
-      <meshStandardMaterial side={DoubleSide} transparent opacity={0} />
+      <meshStandardMaterial side={DoubleSide} transparent color={"#0909094f"} />
       <gridHelper
         rotation={[Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}

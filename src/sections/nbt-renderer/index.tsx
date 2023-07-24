@@ -1,24 +1,10 @@
 import { Canvas } from "@react-three/fiber";
 import { ComponentType } from "react";
-import { Block, BlockTextureLoader } from "~/components";
-import { NBT, TagType } from "~/types";
+import { NBT, TagType, simplifyNBT } from "~/types";
 import { Cursor } from "./cursor";
 import { Ground } from "./ground";
 import { Control } from "./control";
-
-export type BlockInfo = {
-  pos: number[];
-  state: number;
-};
-
-export type PaletteInfo = {
-  Name: string;
-};
-
-export type simplifyNBT = {
-  blocks: BlockInfo[];
-  palette: PaletteInfo[];
-};
+import { Block } from "./block";
 
 export interface NbtRendererProps {
   nbt: NBT;
@@ -56,8 +42,7 @@ function simplify(data: NBT): simplifyNBT {
 
 const NbtRenderer = ({ nbt }: NbtRendererProps) =>
   NbtCanvas(() => {
-    const { blocks, palette } = simplify(nbt);
-
+    const { blocks = [], palette } = simplify(nbt);
     const maxWidth = Math.max(...blocks.map((b) => b.pos[0])) || 0;
     // const maxHeight = Math.max(...blocks.map((b) => b.pos[1])) || 0;
 
@@ -66,17 +51,17 @@ const NbtRenderer = ({ nbt }: NbtRendererProps) =>
         <Control position={[0, 0, -maxWidth]} />
         <scene>
           <ambientLight intensity={0.4} />
+          <directionalLight intensity={0.3} />
           <camera>
-            <BlockTextureLoader names={palette.map((p) => p.Name)}>
-              {blocks &&
-                blocks.map((block, index) => (
-                  <Block
-                    key={index}
-                    name={palette[block.state].Name}
-                    position={block.pos}
-                  />
-                ))}
-            </BlockTextureLoader>
+            <group name="to-export">
+              {blocks.map((block, index) => (
+                <Block
+                  key={index}
+                  block={block}
+                  palette={palette[block.state]}
+                />
+              ))}
+            </group>
             <Ground />
             <Cursor />
           </camera>

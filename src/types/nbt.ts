@@ -1,3 +1,5 @@
+import { BlockEntity, PaletteInfo } from ".";
+
 export type List<T extends TagType> = {
   type: TagType.List;
   value: { type: Tags[T]["type"]; value: Tags[T]["value"][] };
@@ -44,4 +46,9 @@ export type Metadata = {
   buffer: Buffer;
   // The length of bytes read from the buffer
   size: number;
+};
+
+export type simplifyNBT = {
+  blocks: BlockEntity[];
+  palette: PaletteInfo[];
 };
